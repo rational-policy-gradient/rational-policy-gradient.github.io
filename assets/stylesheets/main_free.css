@@ -1037,7 +1037,7 @@ table tbody tr {
   border-right: 0;
 }
 table tbody tr:nth-child(2n+1) {
-  background-color: #ececec;
+  background-color: #d6d6d6;
 }
 table tbody tr:first-child {
   border-top: solid 2px white;

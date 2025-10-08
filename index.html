@@ -1,0 +1,735 @@
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robust and Diverse Multi-Agent Learning via Rational Policy Gradient</title>
+    <meta name="description"
+        content="We present a novel approach to policy gradient methods that preserves rationality in reinforcement learning agents.">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="robots" content="all">
+    <meta content="en_EN" property="og:locale">
+    <meta content="website" property="og:type">
+    <meta content="https://shikun.io/projects/clarity" property="og:url">
+    <meta content="Robust and Diverse Multi-Agent Learning via Rational Policy Gradient" property="og:title">
+    <meta
+        content="A novel approach to policy gradient methods that preserves rationality in reinforcement learning agents."
+        property="og:description">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@your_twitter_id">
+    <meta name="twitter:description"
+        content="Robust and Diverse Multi-Agent Learning via Rational Policy Gradient: A novel approach to policy gradient methods that preserves rationality in reinforcement learning agents.">
+    <meta name="twitter:image:src" content="assets/figures/clarity.png">
+
+    <link rel="stylesheet" type="text/css" media="all" href="assets/stylesheets/main_free.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="clarity/clarity.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/foundation.min.css">
+    <link href="assets/fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
+    <!-- <script src="assets/scripts/navbar.js"></script>  Comment to remove table of content. -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            "HTML-CSS": {
+              scale: 95,
+              fonts: ["Gyre-Pagella"],
+              imageFont: null,
+              undefinedFamily: "'Arial Unicode MS', cmbright"
+            },
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                processEscapes: true
+              }
+          });
+    </script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!-- Title Page -->
+    <!-- Dark Theme Example: Change the background colour dark and change the following div "blog-title" into "blog-title white". -->
+    <div class="container blog" id="first-content" style="background-color: #E0E4E6;">
+        <!-- If you don't have a project cover: Change "blog-title" into "blog-title no-cover"  -->
+        <div class="blog-title no-cover">
+            <div class="blog-intro" style="padding-bottom: 0px;">
+                <div>
+                    <h1 class="title" style="padding-bottom: 15px;">Robust and Diverse Multi-Agent Learning via Rational
+                        Policy Gradient</h1>
+                    <p class="author" style="padding-top: 10px;">
+                        Niklas Lauffer<sup> 1</sup>, Ameesh Shah<sup> 1</sup>, Micah Carroll<sup> 1</sup>, Sanjit
+                        Seshia<sup> 1</sup>, Stuart Russell<sup> 1</sup>, Michael Dennis<sup> 2</sup>
+                    </p>
+                    <p class="author" style="padding-top: 10px;">
+                        <sup>1</sup>UC Berkeley &nbsp; &nbsp; <sup>2</sup>Google Deepmind
+                    </p>
+                    <p class="abstract">
+                        Adversarial optimization algorithms that explicitly search for flaws in agents' policies have
+                        been successfully applied to finding robust and diverse policies in multi-agent settings.
+                        However, the success of adversarial optimization has been largely limited to zero-sum settings
+                        because its naive application in cooperative settings leads to a critical failure mode: agents
+                        are irrationally incentivized to <em>self-sabotage</em>, blocking the completion of tasks and
+                        halting further learning. To address this, we introduce <em>Rationality-preserving Policy
+                            Optimization (RPO)</em>, a formalism for adversarial optimization that avoids self-sabotage
+                        by ensuring agents remain <em>rational</em>—that is, their policies are optimal with respect to
+                        some possible partner policy. To solve RPO, we develop <em>Rational Policy Gradient (RPG)</em>,
+                        which trains agents to maximize their own reward in a modified version of the original game in
+                        which we use <em>opponent shaping</em> techniques to optimize the adversarial objective. RPG
+                        enables us to extend a variety of existing adversarial optimization algorithms that, no longer
+                        subject to the limitations of self-sabotage, can find adversarial examples, improve robustness
+                        and adaptability, and learn diverse policies. We empirically validate that our approach achieves
+                        strong performance in several popular cooperative and general-sum environments.
+                    </p>
+                    <!-- Using FontAwesome Pro -->
+                    <!-- <div class="info">
+                        <div>
+                            <a href="https://arxiv.org" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)"> Paper <i class="far fa-book-open"></i></a> &nbsp;&nbsp; 
+                            <a href="https://github.com" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)">Code <i class="far fa-code"></i></a>  &nbsp;&nbsp; 
+                            <a href="https://www.microsoft.com/en-gb/microsoft-365/powerpoint" class="button icon" style="background-color: rgba(255, 255, 255, 0.3);">Slides <i class="far fa-presentation"></i></a>  &nbsp;&nbsp; 
+                            <a href="https://huggingface.co/spaces" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)">Demo <i class="fa-light fa-face-smiling-hands"></i></a>
+                        </div>
+                    </div> -->
+
+                    <!-- Using FontAwesome Free -->
+                    <div class="info">
+                        <div>
+                            <a href="paper.pdf" class="button icon" style="background-color: rgba(255, 255, 255, 0.5)">
+                                Paper <i class="fa-solid fa-file-text"></i></a> &nbsp;&nbsp;
+                            <a href="https://github.com/niklaslauffer/rational-policy-gradient" class="button icon"
+                                style="background-color: rgba(255, 255, 255, 0.5)">Code <i
+                                    class="fa-solid fa-code"></i></a> &nbsp;&nbsp;
+                            <a href="cross-play-grids.html" class="button icon"
+                                style="background-color: rgba(255, 255, 255, 0.5)">Interactive Visualization <i
+                                    class="fa-solid fa-sliders"></i></a> &nbsp;&nbsp;
+                            <!-- <a href="https://www.microsoft.com/en-gb/microsoft-365/powerpoint" class="button icon"
+                                style="background-color: rgba(255, 255, 255, 0.2);">Slides <i
+                                    class="fa-regular fa-file-powerpoint"></i></a> &nbsp;&nbsp;
+                            <a href="https://huggingface.co/spaces/" class="button icon"
+                                style="background-color: rgba(255, 255, 255, 0.2)">Demo <i
+                                    class="fa-solid fa-laptop-code"></i></a> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <p>NeurIPS 2025</p>
+                </div>
+            </div>
+
+            <div class="blog-cover">
+                <img class="foreground" src="assets/figures/rpg-fig1.png" style="width: 92%; height: auto;">
+                <!-- <img class="background" src="assets/figures/fig1_left-1.png"> -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container blog main first" id="blog-main">
+        <h1>
+            Rationality-preserving Policy Optimization
+        </h1>
+        <p class='text'>
+            In order to reap the benefits of adversarial optimization without incurring self-sabotaging behavior, we
+            establish a new paradigm for adversarial optimization called <em>Rationality-preserving Policy
+                Optimization</em> (RPO). We formalize RPO as an adversarial optimization problem that requires the
+            policy to be
+            optimal with respect to at least one policy that other agent(s) might play. This can be thought of as
+            enforcing the agent to be <em>rational</em>: i.e., the agent must be utility-maximizing for some choice of
+            teammates. RPO can be formally expressed as the following optimization problem:
+        </p>
+        $$
+        \begin{aligned}
+        \max_{\pi_i} \ &O_i(\pi_1, \dots,\pi_m) \\
+        \text{subject to} \ &\exists \pi_{-i}' \text{ s.t. } \pi_i \in \text{BR}(\pi_{-i}').
+        \end{aligned}
+        $$
+        <p class='text'>
+            The rationality constraint imposed by RPO is difficult to directly integrate into a single optimization
+            objective.
+            To solve RPO, we introduce a novel approach called <em>rational policy gradient (RPG)</em>, which provides a
+            gradient-based method for ensuring rational learning while optimizing an adversarial objective. RPG
+            introduces a new set of agents called <em>manipulators</em>, one for each of the agents in the original
+            optimization problem (which we call <em>base agents</em>).
+            In RPG, the base agents only train to maximize their own reward in a copy of the game (called its
+            <em>manipulator environment</em>) with their teammates replaced by their manipulator counterparts -- this
+            ensures that the base agents are solely learning to be rational.
+            Each manipulator uses <a href="https://arxiv.org/abs/1703.05449" target="_blank">opponent-shaping</a> to
+            manipulate the base agents' learning
+            and guide them towards policies that optimize the adversarial objective (e.g., achieving low reward with one
+            another in the original <em>base environment</em>).
+            The manipulators are discarded after training and the trained base agents give the solution to the
+            RPO-version of the adversarial objective -- whether that be related to robustness, diversity, or some other
+            objective.
+        </p>
+
+
+        <!-- <p class="text">
+            In this work, we address the critical challenge of maintaining rationality in learned policies. We propose
+            the Rationality Preserving Policy Gradient (RPPG) algorithm, which incorporates explicit constraints and
+            regularization terms to ensure that the optimization process respects key axioms of rational choice theory.
+            Our approach builds upon classical policy gradient methods while introducing novel theoretical guarantees
+            and practical improvements that enhance both performance and interpretability of the resulting policies.
+        </p> -->
+    </div>
+    <div class="container blog large">
+        <img src="assets/figures/rpg-robustness.png" style="width: 100%;">
+        <p class="caption">
+            <strong>Figure 1: In-population cross-play rewards for different algorithms across environments. Points
+                represent pairs of seeds, bar charts represent means, and error bars represent 95% confidence
+                intervals.
+        </p>
+    </div>
+
+    <!-- <div class="container blog main large gray-linear">
+        <img src="assets/figures/rpg-robustness.png">
+        <p class="caption">
+            <strong>Figure 1: In-population cross-play rewards for different algorithms across environments. Points
+                represent pairs of seeds, bar charts represent means, and error bars represent 95% confidence
+                intervals.
+        </p>
+    </div> -->
+
+
+    <div class="container blog main">
+        <h1>
+            Interactive Cross-play Grids
+        </h1>
+
+        <p class="text">
+            Figure 2 shows robustness results for different environments in the form of
+            <em>cross-play grids</em>. In our cross-play grid, each row represents a single seed trained by the
+            specified algorithm. The first five rows represent SP with an entropy coefficient of 0.01 and the second
+            five represent SP with an entropy coefficient of 0.05. The following ten rows represent the five pairs of
+            policies from each run of AD (since we use a population of size two) and the last ten rows represent AD-RPG
+            in the same fashion. Each column represents the same so that in diagonal entries, both players come from the
+            same seed. Each square in the cross-play grid represents the average reward of the policies from the two
+            associated seeds played against one another averaged over 1000 rollouts of the game.
+            <strong>Figure 1</strong> shows the average <em>intra-population cross-play</em> reward for each
+            algorithm: the average of the cross-play scores from within the population of seeds of each individual
+            algorithm.
+        </p>
+    </div>
+
+    <div class="container blog main gray-linear" style="display: flex; flex-direction: column; align-items: center;">
+        <div id="heatmap-container" style="position: relative; display: inline-block; width: 80%; margin: 0 auto;">
+            <img id="heatmap-image" src="assets/figures/rpg-forced-coord-heatmap.png"
+                style="width: 100%; height: auto; display: block;">
+            <!-- Interactive grid overlay - 6x6 grid -->
+            <div id="grid-overlay">
+                <!-- Row 0 -->
+                <div class="grid-cell" data-row="0" data-col="0" data-video="0-0.mp4"></div>
+                <div class="grid-cell" data-row="0" data-col="1" data-video="0-1.mp4"></div>
+                <div class="grid-cell" data-row="0" data-col="2" data-video="0-2.mp4"></div>
+                <div class="grid-cell" data-row="0" data-col="3" data-video="0-3.mp4"></div>
+                <div class="grid-cell" data-row="0" data-col="4" data-video="0-4.mp4"></div>
+                <div class="grid-cell" data-row="0" data-col="5" data-video="0-5.mp4"></div>
+                <!-- Row 1 -->
+                <div class="grid-cell" data-row="1" data-col="0" data-video="1-0.mp4"></div>
+                <div class="grid-cell" data-row="1" data-col="1" data-video="1-1.mp4"></div>
+                <div class="grid-cell" data-row="1" data-col="2" data-video="1-2.mp4"></div>
+                <div class="grid-cell" data-row="1" data-col="3" data-video="1-3.mp4"></div>
+                <div class="grid-cell selected" data-row="1" data-col="4" data-video="1-4.mp4"></div>
+                <div class="grid-cell" data-row="1" data-col="5" data-video="1-5.mp4"></div>
+                <!-- Row 2 -->
+                <div class="grid-cell" data-row="2" data-col="0" data-video="2-0.mp4"></div>
+                <div class="grid-cell" data-row="2" data-col="1" data-video="2-1.mp4"></div>
+                <div class="grid-cell" data-row="2" data-col="2" data-video="2-2.mp4"></div>
+                <div class="grid-cell" data-row="2" data-col="3" data-video="2-3.mp4"></div>
+                <div class="grid-cell" data-row="2" data-col="4" data-video="2-4.mp4"></div>
+                <div class="grid-cell" data-row="2" data-col="5" data-video="2-5.mp4"></div>
+                <!-- Row 3 -->
+                <div class="grid-cell" data-row="3" data-col="0" data-video="3-0.mp4"></div>
+                <div class="grid-cell" data-row="3" data-col="1" data-video="3-1.mp4"></div>
+                <div class="grid-cell" data-row="3" data-col="2" data-video="3-2.mp4"></div>
+                <div class="grid-cell" data-row="3" data-col="3" data-video="3-3.mp4"></div>
+                <div class="grid-cell" data-row="3" data-col="4" data-video="3-4.mp4"></div>
+                <div class="grid-cell" data-row="3" data-col="5" data-video="3-5.mp4"></div>
+                <!-- Row 4 -->
+                <div class="grid-cell" data-row="4" data-col="0" data-video="4-0.mp4"></div>
+                <div class="grid-cell" data-row="4" data-col="1" data-video="4-1.mp4"></div>
+                <div class="grid-cell" data-row="4" data-col="2" data-video="4-2.mp4"></div>
+                <div class="grid-cell" data-row="4" data-col="3" data-video="4-3.mp4"></div>
+                <div class="grid-cell" data-row="4" data-col="4" data-video="4-4.mp4"></div>
+                <div class="grid-cell" data-row="4" data-col="5" data-video="4-5.mp4"></div>
+                <!-- Row 5 -->
+                <div class="grid-cell" data-row="5" data-col="0" data-video="5-0.mp4"></div>
+                <div class="grid-cell" data-row="5" data-col="1" data-video="5-1.mp4"></div>
+                <div class="grid-cell" data-row="5" data-col="2" data-video="5-2.mp4"></div>
+                <div class="grid-cell" data-row="5" data-col="3" data-video="5-3.mp4"></div>
+                <div class="grid-cell" data-row="5" data-col="4" data-video="5-4.mp4"></div>
+                <div class="grid-cell" data-row="5" data-col="5" data-video="5-5.mp4"></div>
+            </div>
+        </div>
+        <p class="caption">
+            Figure 2: <b>Cross-play grid in the <em>Forced Coordination</em> environment:</b> click any grid square
+            to see a representative rollout below.
+        </p>
+        <div class="video-control">
+            <a class="button" onclick="SlowVideo('eschernet')"><i class="fa-solid fa-backward"></i></a>
+            <!-- Using FontAwesome Pro -->
+            <!-- <a class="button"onclick="ToggleVideo('eschernet')"><i class="fa-solid fa-play-pause"></i></a> -->
+
+            <!-- Using FontAwesome Free -->
+            <a class="button" id="toggle-video-btn" onclick="ToggleVideo('eschernet')"><i
+                    class="fa-solid fa-pause"></i></a>
+
+            <a class="button" onclick="FastVideo('eschernet')"><i class="fa-solid fa-forward"></i></a>
+            <a class="button" onclick="RestartVideo('eschernet')"><i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+
+        <div class="">
+            <p class="video-speed" id="eschernet-msg">
+                Speed: ×1.00
+            </p>
+        </div>
+
+        <div class="video-container">
+            <div>
+                <video id="interactive-video" loop playsinline muted autoplay class="eschernet-video"
+                    src="assets/figures/forced-coordination-videos/1-4.mp4"
+                    style="width: 480px; max-width: 100%; height: auto;">
+                </video>
+                <p class="caption inline center" id="video-caption">Click on a grid square above to load corresponding
+                    video</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container blog main">
+        <p class="text">
+            Click <a href="cross-play-grids.html" target="_blank">here</a> for
+            visualizations of cross-play grids for other environments.
+        </p>
+    </div>
+
+
+    <div class="container blog main">
+        <h1>Rational Adversarial Attacks</h1>
+        <p class="text">
+            Text for adversarial attacks [TODO].
+        </p>
+    </div>
+
+    <div class="container blog large gray">
+        <div class="columns-2">
+            <div style="flex: 0.66;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead class="center">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th colspan="3" style="background-color: #d6d6d6;">Adversarial Attack Type</th>
+                            </tr>
+                            <tr>
+                                <th>Victim</th>
+                                <th>Training</th>
+                                <th>AP</th>
+                                <th>PAIRED-A-RPG</th>
+                                <th>AP-RPG</th>
+                            </tr>
+                        </thead>
+                        <tbody class="center">
+                            <tr>
+                                <td>PAIRED-RPG</td>
+                                <td>0.93</td>
+                                <td>0.0</td>
+                                <td>0.84</td>
+                                <td>0.85</td>
+                            </tr>
+                            <tr>
+                                <td>AT-RPG</td>
+                                <td>0.65</td>
+                                <td>0.0</td>
+                                <td>0.72</td>
+                                <td>0.88</td>
+                            </tr>
+                            <tr>
+                                <td>AT</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <td>PAIRED</td>
+                                <td>0.13</td>
+                                <td>0.0</td>
+                                <td>0.50</td>
+                                <td>0.42</td>
+                            </tr>
+                            <tr>
+                                <td>AD-RPG</td>
+                                <td>0.98</td>
+                                <td>0.0</td>
+                                <td>0.25</td>
+                                <td>0.96</td>
+                            </tr>
+                            <tr>
+                                <td>Self-play</td>
+                                <td>0.98</td>
+                                <td>0.0</td>
+                                <td>0.16</td>
+                                <td>0.96</td>
+                            </tr>
+                            <tr>
+                                <td>AD</td>
+                                <td>0.00</td>
+                                <td>0.0</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="caption">
+                    <strong>Table 1: Adversarial Attack Results.</strong> The average reward that policies trained by
+                    various algorithms ("Victim" column) achieve against different adversarial attack types. The "Train"
+                    column shows the reward achieved during training and the following columns show the reward against
+                    different adversarial attack types. The AP attack trivially achieves zero reward because it
+                    self-sabotages.
+                </p>
+            </div>
+
+            <div style="width: 80%;">
+                <video src="assets/figures/adversarial-attack-gif-trimmed.mp4" style="width: 100%;" autoplay loop
+                    muted></video>
+                <p class="caption">
+                    <strong>Figure 2: Rational Adversarial Example.</strong> A rational adversarial example found by
+                    AD-RPG. Both agents assume the other will move out of the way, preventing progress.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="container blog main">
+        <h1>Conclusion</h1>
+        <p class="text">
+            Per aptent diam; ut in mauris ultricies torquent conubia dolor. Aliquet venenatis sapien, dictum finibus ad
+            dui. Finibus sollicitudin nullam consectetur malesuada molestie semper dolor. Platea eget hac cursus aptent
+            maecenas penatibus vulputate. Ligula libero torquent sit per praesent praesent. Sodales risus mattis enim
+            odio risus tristique. Dapibus vivamus quis scelerisque sollicitudin penatibus placerat erat. Ante aliquet
+            vel; morbi quisque leo morbi. Ac sollicitudin imperdiet lacus integer cursus metus parturient euismod
+            sociosqu.
+        </p>
+    </div> -->
+
+    <div class="container blog main">
+        <h2>Citation</h2>
+        <!-- <p class="text">
+            Dictumst eu himenaeos malesuada nisi eros auctor id suspendisse. Ipsum parturient est vitae proin maecenas.
+            Nulla mollis vivamus cras nam dapibus consectetur. Id efficitur ac ultricies ornare at litora. Vestibulum
+            nibh cursus eu gravida vivamus sem vulputate. Montes nisi ipsum urna vitae semper suscipit.
+        </p> -->
+        <pre><code class="plaintext">@article{lauffer2025rpg,
+        title={Robust and Diverse Multi-Agent Learning via Rational Policy Gradient},
+        author={Lauffer, Niklas and Shah, Ameesh and Carroll, Micah and Seshia, Sanjit and Russell, Stuart and Dennis, Michael},
+        journal={Advances in Neural Information Processing Systems},
+        year={2025}
+}</code></pre>
+    </div>
+
+    <!-- Footer Page -->
+    <footer>
+        <div class="container">
+            <p>
+                This website is built on the <a href="https://shikun.io/projects/clarity">Clarity Template</a>, designed
+                by <a href="https://shikun.io/">Shikun Liu</a>.
+            </p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="clarity/clarity.js"></script>
+    <script src="assets/scripts/main.js"></script>
+
+    <!-- Interactive Heatmap Styles and Script -->
+    <style>
+        .grid-cell {
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0);
+            border: 1px solid rgba(255, 255, 255, 0);
+            transition: all 0.1s ease;
+        }
+
+        .grid-cell:hover {
+            background: rgba(255, 255, 255, 0.38);
+            border: 1px solid rgba(255, 255, 255, 0.778);
+        }
+
+        /* CUSTOMIZE THIS SECTION FOR DIFFERENT HIGHLIGHTING STYLES */
+        .grid-cell.selected {
+            /* Option 1: Current blue highlighting */
+            background: rgba(0, 242, 255, 0.093);
+            border: 5px solid rgb(0, 169, 68);
+
+            /* Option 8: Glowing effect - uncomment to use */
+            /* background: rgba(0, 255, 255, 0.2);
+            border: 2px solid rgba(0, 255, 255, 1);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); */
+        }
+
+        #interactive-video,
+        video {
+            transition: opacity 0.5s ease;
+            width: 320px !important;
+            height: 320px !important;
+            max-width: 100% !important;
+            background-color: rgb(100, 100, 100) !important;
+            /* Pixel-perfect scaling - prevents browser blur when scaling up */
+            image-rendering: -moz-crisp-edges;
+            /* Firefox */
+            image-rendering: -webkit-crisp-edges;
+            /* Safari */
+            image-rendering: pixelated;
+            /* Chrome/Edge */
+            image-rendering: crisp-edges;
+            /* General fallback */
+            /* Disable smoothing */
+            -ms-interpolation-mode: nearest-neighbor;
+            /* IE/Edge legacy */
+        }
+
+        /* Prevent layout shifts in video container */
+        .video-container {
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Responsive grid alignment */
+        #heatmap-container {
+            max-width: 100%;
+        }
+
+        #grid-overlay {
+            /* Position and layout */
+            position: absolute;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 0px;
+
+            /* Adjust these percentages to match where your actual grid is in the image */
+            /* You may need to fine-tune these values based on your specific heatmap */
+            top: 8.9%;
+            /* Distance from top of image to start of grid */
+            left: 15.6%;
+            /* Distance from left of image to start of grid */
+            width: 68.4%;
+            /* Width of the actual grid area */
+            height: 84.5%;
+            /* Height of the actual grid area */
+
+            /* Debug border - remove when positioning is correct */
+            /* border: 2px solid red; */
+        }
+
+        /* Fix bold styling for caption content */
+        #video-caption strong {
+            font-weight: bold !important;
+        }
+
+        /* Color styling for agent names */
+        #video-caption .blue-agent {
+            color: rgb(0, 0, 191) !important;
+            font-weight: bold !important;
+        }
+
+        #video-caption .red-agent {
+            color: rgb(206, 0, 0) !important;
+            font-weight: bold !important;
+        }
+
+        /* Center the speed text at the top of the video */
+        .video-speed {
+            text-align: center !important;
+            margin-bottom: 5px !important;
+            font-size: 14px !important;
+            color: #666 !important;
+        }
+
+        /* Fix button width for play/pause toggle to prevent shifting */
+        #toggle-video-btn {
+            min-width: 25px !important;
+            display: inline-flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
+        /* Video control button styling */
+        .video-control .button {
+            background-color: #dfdfdf !important;
+        }
+
+        .video-control .button:hover {
+            background-color: #dfdfdf !important;
+            opacity: 0.8;
+        }
+
+        .video-control .button:active {
+            background-color: #dfdfdf !important;
+            opacity: 0.5;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const gridCells = document.querySelectorAll('.grid-cell');
+            const video = document.getElementById('interactive-video');
+            const heatmapImage = document.getElementById('heatmap-image');
+            const gridOverlay = document.getElementById('grid-overlay');
+
+            // Function to update grid positioning based on image size
+            function updateGridPosition() {
+                // This ensures the grid stays aligned with the image
+                const imageRect = heatmapImage.getBoundingClientRect();
+                const containerRect = heatmapImage.parentElement.getBoundingClientRect();
+
+                // Optional: Add debug logging to help fine-tune positioning
+                // console.log('Image dimensions:', imageRect.width, imageRect.height);
+            }
+
+            // Update grid position on window resize
+            window.addEventListener('resize', updateGridPosition);
+
+            // Update grid position when image loads
+            heatmapImage.addEventListener('load', updateGridPosition);
+
+            // Initial position update
+            updateGridPosition();
+
+            // Initialize default selected cell and video
+            function initializeDefaultSelection() {
+                const defaultCell = document.querySelector('.grid-cell.selected');
+                if (defaultCell) {
+                    const videoFile = defaultCell.getAttribute('data-video');
+                    const row = defaultCell.getAttribute('data-row');
+                    const col = defaultCell.getAttribute('data-col');
+
+                    // Set default video
+                    const videoPath = `assets/figures/forced-coordination-videos/${videoFile}`;
+                    video.src = videoPath;
+                    video.playbackRate = 0.5; // Slow down by half
+
+                    // Update caption
+                    const caption = document.getElementById('video-caption');
+                    if (caption) {
+                        caption.innerHTML = getCaptionText(parseInt(row), parseInt(col));
+                    }
+                }
+            }
+
+            // Function to get caption text based on row and column
+            function getCaptionText(row, col) {
+                function getLabel(value) {
+                    if (value === 0) return "low entropy self-play";
+                    if (value === 1) return "high entropy self-play";
+                    if (value === 2 || value === 3) return "adversarial diversity";
+                    if (value === 4 || value === 5) return "adversarial diversity - RPG";
+                    return "Unknown"; // fallback
+                }
+
+                const blueLabel = getLabel(col);
+                const redLabel = getLabel(row);
+                return `The <strong class="blue-agent">blue</strong> agent is trained with <strong>${blueLabel}</strong> and the <strong class="red-agent">red</strong> agent is trained with <strong>${redLabel}</strong>.`;
+            }
+
+            // Call initialization after a short delay to ensure everything is loaded
+            setTimeout(initializeDefaultSelection, 100);
+
+            // Function to update play/pause icon based on video state
+            function updatePlayPauseIcon() {
+                const toggleBtn = document.getElementById('toggle-video-btn');
+                const toggleIcon = toggleBtn ? toggleBtn.querySelector('i') : null;
+
+                if (toggleIcon) {
+                    // Check if video is currently playing
+                    if (!video.paused && !video.ended) {
+                        toggleIcon.className = 'fa-solid fa-pause';
+                    } else {
+                        toggleIcon.className = 'fa-solid fa-play';
+                    }
+                }
+            }
+
+            // Add event listeners to automatically update icon when video state changes
+            video.addEventListener('play', updatePlayPauseIcon);
+            video.addEventListener('pause', updatePlayPauseIcon);
+            video.addEventListener('loadeddata', function () {
+                // Small delay to ensure autoplay has started
+                setTimeout(updatePlayPauseIcon, 100);
+            });
+
+            gridCells.forEach(cell => {
+                cell.addEventListener('click', function () {
+                    // Remove selected class from all cells
+                    gridCells.forEach(c => c.classList.remove('selected'));
+
+                    // Add selected class to clicked cell
+                    this.classList.add('selected');
+
+                    // Get video filename from data attribute
+                    const videoFile = this.getAttribute('data-video');
+                    const row = this.getAttribute('data-row');
+                    const col = this.getAttribute('data-col');
+
+                    // Update video source - adjust the path to match your video location
+                    const videoPath = `assets/figures/forced-coordination-videos/${videoFile}`;
+
+                    // Smoother video transition to prevent flicker
+                    video.style.opacity = '0.3';
+
+                    // Update caption immediately to prevent it from moving
+                    const caption = document.getElementById('video-caption');
+                    if (caption) {
+                        caption.innerHTML = getCaptionText(parseInt(row), parseInt(col));
+                    }
+
+                    // Create a new video element to preload
+                    const newVideo = document.createElement('video');
+                    newVideo.src = videoPath;
+                    newVideo.loop = true;
+                    newVideo.playsinline = true;
+                    newVideo.muted = true;
+                    newVideo.playbackRate = 0.5;
+
+                    newVideo.addEventListener('canplaythrough', function () {
+                        // Once new video is fully loaded, swap it smoothly
+                        video.src = videoPath;
+                        video.load();
+                        video.playbackRate = 0.5;
+                        video.style.opacity = '1';
+
+                        // Update play/pause icon since video will autoplay
+                        updatePlayPauseIcon();
+                    });
+
+                    newVideo.addEventListener('error', function () {
+                        // Fallback if loading fails
+                        video.src = videoPath;
+                        video.load();
+                        video.playbackRate = 0.5;
+                        video.style.opacity = '1';
+
+                        // Update play/pause icon since video will autoplay
+                        updatePlayPauseIcon();
+                    });
+
+                    // Start loading the new video
+                    newVideo.load();
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
