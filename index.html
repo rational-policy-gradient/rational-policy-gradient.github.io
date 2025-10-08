@@ -384,9 +384,14 @@
                 </p>
             </div>
 
-            <div style="width: 80%;">
-                <video src="assets/figures/adversarial-attack-gif-trimmed.mp4" style="width: 100%;" autoplay loop muted
-                    playsinline></video>
+            <div style="width: 80%; position: relative;">
+                <video id="adversarial-video" src="assets/figures/adversarial-attack-gif-trimmed.mp4"
+                    style="width: 100%;" autoplay loop muted playsinline></video>
+                <div id="reset-flash" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); 
+                    background: rgba(255, 255, 255, 0); color: rgba(255, 255, 255, 0.475); padding: 8px 16px; 
+                    font-weight: bold; font-size: 24px; opacity: 0; pointer-events: none; z-index: 10;">
+                    RESET
+                </div>
                 <p class="caption">
                     Figure 2: A rational adversarial example found by AD-RPG. Both agents assume the other will move out
                     of the way, preventing progress.
@@ -568,6 +573,11 @@
             background-color: #dfdfdf !important;
             opacity: 0.5;
         }
+
+        /* Reset flash animation */
+        #reset-flash {
+            transition: opacity 0.2s ease-in-out !important;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -575,6 +585,29 @@
             const video = document.getElementById('interactive-video');
             const heatmapImage = document.getElementById('heatmap-image');
             const gridOverlay = document.getElementById('grid-overlay');
+
+            const adversarialVideo = document.getElementById('adversarial-video');
+            const resetFlash = document.getElementById('reset-flash');
+            if (adversarialVideo && resetFlash) {
+                adversarialVideo.playbackRate = 0.3;
+
+                let lastTime = 0;
+                // Add event listener to detect when video loops back to beginning
+                adversarialVideo.addEventListener('timeupdate', function () {
+                    const currentTime = adversarialVideo.currentTime;
+
+                    // If current time is much smaller than last time, video has looped
+                    if (lastTime > 1 && currentTime < 1) {
+                        // Flash "RESET" text
+                        resetFlash.style.opacity = '1';
+                        setTimeout(function () {
+                            resetFlash.style.opacity = '0';
+                        }, 500); // Flash for 500ms
+                    }
+
+                    lastTime = currentTime;
+                });
+            }
 
             // Function to update grid positioning based on image size
             function updateGridPosition() {
