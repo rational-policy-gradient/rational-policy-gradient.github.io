@@ -174,6 +174,24 @@
             intervals.
         </p>
     </div>
+    <div class="container blog main" id="blog-main">
+        <p class='text'>
+            Our main algorithm for training robust agents using RPG is called <em>Adversarial Diversity - Rational
+                Policy Gradient</em> (AD-RPG), an RPG version of the <a
+                href="https://openreview.net/forum?id=uLE3WF3-H_5" target="_blank">adversarial diversity</a> algorithm.
+            AD-RPG trains
+            robust agents by training a population of agents to simultaneously maximize their score with a partner while
+            finding strategies that other agents in the population perform poorly against, ultimately improving the
+            robustness of the entire population. We compare AD-RPG against classical adversarial diversity (AD) as well
+            as self-play (SP) with
+            both low (0.01) and high (0.05) entropy coefficients. Figure 1 shows the average <em>in-population
+                cross-play</em> reward for
+            each algorithm: the average of the cross-play scores from within the population of five seeds of each
+            individual algorithm. AD-RPG performs better than all baselines in the Overcooked environments and
+            comparably or stronger in Hanabi.
+        </p>
+    </div>
+
 
     <!-- <div class="container blog main large gray-linear">
         <img src="assets/figures/rpg-robustness.png">
@@ -193,14 +211,15 @@
             Figure 2 shows robustness results for different environments in the form of
             <em>cross-play grids</em>. In our cross-play grid, each row represents a single seed trained by the
             specified algorithm. The first five rows represent SP with an entropy coefficient of 0.01 and the second
-            five represent SP with an entropy coefficient of 0.05. The following ten rows represent the five pairs of
-            policies from each run of AD (since we use a population of size two) and the last ten rows represent AD-RPG
+            five represent self-play (SP) with an entropy coefficient of 0.05. The following ten rows represent the five
+            pairs of policies from each run of adversarial diversity (AD) (since we use a population of size two) and
+            the last ten rows represent adversarial diversity - RPG (AD-RPG)
             in the same fashion. Each column represents the same so that in diagonal entries, both players come from the
             same seed. Each square in the cross-play grid represents the average reward of the policies from the two
             associated seeds played against one another averaged over 1000 rollouts of the game.
             <strong>Figure 1</strong> shows the average <em>intra-population cross-play</em> reward for each
             algorithm: the average of the cross-play scores from within the population of seeds of each individual
-            algorithm.
+            algorithm. Click on any square in the grid below to see a sampled rollout of the pair of policies.
         </p>
     </div>
 
@@ -256,7 +275,7 @@
         </div>
         <p class="caption">
             Figure 2: <b>Cross-play grid in the <em>Forced Coordination</em> environment:</b> click any grid square
-            to see a representative rollout below.
+            to see a sampled rollout below.
         </p>
         <div class="video-control">
             <a class="button" onclick="SlowVideo('eschernet')"><i class="fa-solid fa-backward"></i></a>
@@ -291,6 +310,13 @@
 
     <div class="container blog main">
         <p class="text">
+            When AD-RPG is the blue agent, it's able to adapt to any strategy from its partner. Other algorithms aren't
+            as robust as they fail to generalize outside of the fixed strategy that their algorithm happens to converge
+            on. For example, high and low entropy self-play converge to passing onions on different parts of the
+            counter, and thus fail to coordinate when paired with each other. AD-RPG is flexible enough to able to adapt
+            to either.
+        </p>
+        <p class="text">
             Click <a href="cross-play-grids.html" target="_blank">here</a> for
             visualizations of cross-play grids for other environments.
         </p>
@@ -300,105 +326,182 @@
     <div class="container blog main">
         <h1>Rational Adversarial Attacks</h1>
         <p class="text">
-            Text for adversarial attacks [TODO].
+            RPG can also be used to create rational adversarial attacks that avoid <em>self-sabotage</em>.
+            We tested the ability of AP-RPG to discover weaknesses in policies in the <em>Cramped Room</em>
+            Overcooked layout. First, we trained a policy using self-play (SP), then we used AP-RPG to search for a
+            rational adversarial examples. AP-RPG is able to successfully find weaknesses in the SP policy,
+            finding an adversarial policy that achieves rewards of 4.6 and 15.1 respectively, even though
+            this seed achieves a reward of 240 in self-play. Figure 2 illustrate one of these adversarial examples that
+            AP-RPG finds: instead of
+            simply sabotaging the game like AP, instead, AP-RPG discovers that the victim (blue) assumes that the agents
+            will move around each other clockwise. The manipulator in AP-RPG incentivizes the adversary (red) to instead
+            move in a counterclockwise fashion, a perfectly rational strategy, though it happens to be incompatible with
+            the victim.
         </p>
     </div>
 
-    <div class="container blog large gray">
-        <div class="columns-2">
-            <div style="flex: 0.66;">
-                <div class="table-wrapper">
-                    <table>
-                        <thead class="center">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th colspan="3" style="background-color: #d6d6d6;">Adversarial Attack Type</th>
-                            </tr>
-                            <tr>
-                                <th>Victim</th>
-                                <th>Training</th>
-                                <th>AP</th>
-                                <th>PAIRED-A-RPG</th>
-                                <th>AP-RPG</th>
-                            </tr>
-                        </thead>
-                        <tbody class="center">
-                            <tr>
-                                <td>PAIRED-RPG</td>
-                                <td>0.93</td>
-                                <td>0.0</td>
-                                <td>0.84</td>
-                                <td>0.85</td>
-                            </tr>
-                            <tr>
-                                <td>AT-RPG</td>
-                                <td>0.65</td>
-                                <td>0.0</td>
-                                <td>0.72</td>
-                                <td>0.88</td>
-                            </tr>
-                            <tr>
-                                <td>AT</td>
-                                <td>0.0</td>
-                                <td>0.0</td>
-                                <td>0.0</td>
-                                <td>0.0</td>
-                            </tr>
-                            <tr>
-                                <td>PAIRED</td>
-                                <td>0.13</td>
-                                <td>0.0</td>
-                                <td>0.50</td>
-                                <td>0.42</td>
-                            </tr>
-                            <tr>
-                                <td>AD-RPG</td>
-                                <td>0.98</td>
-                                <td>0.0</td>
-                                <td>0.25</td>
-                                <td>0.96</td>
-                            </tr>
-                            <tr>
-                                <td>Self-play</td>
-                                <td>0.98</td>
-                                <td>0.0</td>
-                                <td>0.16</td>
-                                <td>0.96</td>
-                            </tr>
-                            <tr>
-                                <td>AD</td>
-                                <td>0.00</td>
-                                <td>0.0</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <div class="container blog main gray">
+        <div class="columns-3">
+            <div style="width: 100%; position: relative;">
+                <video id="adversarial-sp-video" src="assets/figures/cramped-room-videos/1-1.mp4" style="width: 100%;"
+                    autoplay loop muted playsinline></video>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var spVideo = document.getElementById('adversarial-sp-video');
+                        if (spVideo) {
+                            spVideo.playbackRate = 0.5;
+                        }
+                    });
+                </script>
                 <p class="caption">
-                    Table 1: The average reward that policies trained by various algorithms ("Victim" column) achieve
-                    against different adversarial attack types. The "Train" column shows the reward achieved during
-                    training and the following columns show the reward against different adversarial attack types. The
-                    AP attack trivially achieves zero reward because it self-sabotages.
+                    Figure 2: A policy trained in self-play that learns to move clockwise around its partner.
                 </p>
             </div>
 
-            <div style="width: 80%; position: relative;">
-                <video id="adversarial-video" src="assets/figures/adversarial-attack-gif-trimmed.mp4"
+
+            <div style="width: 100%; position: relative;">
+                <video id="adversarial-naive-video" src="assets/figures/adversarial-example-naive.mp4"
                     style="width: 100%;" autoplay loop muted playsinline></video>
-                <div id="reset-flash" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); 
+                <!-- <div id="reset-flash" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); 
                     background: rgba(255, 255, 255, 0); color: rgba(255, 255, 255, 0.475); padding: 8px 16px; 
                     font-weight: bold; font-size: 24px; opacity: 0; pointer-events: none; z-index: 10;">
                     RESET
-                </div>
+                </div> -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var spVideo = document.getElementById('adversarial-naive-video');
+                        if (spVideo) {
+                            spVideo.playbackRate = 0.5;
+                        }
+                    });
+                </script>
                 <p class="caption">
-                    Figure 2: A rational adversarial example found by AD-RPG. Both agents assume the other will move out
-                    of the way, preventing progress.
+                    Figure 4: An ordinary adversarial example (red agent) acts irrationally, simply blocking the
+                    plate dispenser and preventing progress.
                 </p>
             </div>
+
+            <div style="width: 100%; position: relative;">
+                <video id="adversarial-video" src="assets/figures/adversarial-attack-gif-trimmed.mp4"
+                    style="width: 100%;" autoplay loop muted playsinline></video>
+                <!-- <div id="reset-flash" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); 
+                    background: rgba(255, 255, 255, 0); color: rgba(255, 255, 255, 0.475); padding: 8px 16px; 
+                    font-weight: bold; font-size: 24px; opacity: 0; pointer-events: none; z-index: 10;">
+                    RESET
+                </div> -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var spVideo = document.getElementById('adversarial-video');
+                        if (spVideo) {
+                            spVideo.playbackRate = 0.5;
+                        }
+                    });
+                </script>
+                <p class="caption">
+                    Figure 3: A rational adversarial example (red agent) found by AD-RPG learns that the victim (blue)
+                    can't adapt to counterclockwise movement.
+                </p>
+            </div>
+
         </div>
     </div>
+
+    <div class="container blog main">
+        <h3>Evaluating robustness against rational adversarial attacks</h3>
+        <p class="text">
+            To explore the effectiveness of AT-RPG, PAIRED-RPG, AP-RPG, and PAIRED-A-RPG, we use a modified version of
+            the STORM environment.
+            Table 1 shows the performance of various fixed victims against
+            different types of adversarial attacks. The "Victim" and "Training" columns indicate the
+            algorithm used to train the victim and the reward achieved during training, respectively. The "AP",
+            "PAIRED-A-RPG", and "AP-RPG" columns show the performance against these RPG adversarial attacks. As expected, every
+            victim achieves zero reward against the AP attack since the adversary simply learns to self-sabotage the
+            game by collecting no coins. Likewise, the non-RPG variations of algorithms (AT, PAIRED, AD) fail during
+            training due to self-sabotage. PAIRED-A-RPG and AP-RPG are both able to find weaknesses in fixed
+            policies and neither is susceptible to sabotage, PAIRED-RPG and AT-RPG training lead to more robust
+            policies, indicated by high scores against both PAIRED-A-RPG and AP-RPG attacks.
+        </p>
+    </div>
+
+
+    <div class="container blog main gray">
+        <div class="table-wrapper">
+            <table>
+                <thead class="center">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th colspan="3" style="background-color: #d6d6d6;">Adversarial Attack Type</th>
+                    </tr>
+                    <tr>
+                        <th>Victim</th>
+                        <th>Training</th>
+                        <th>AP</th>
+                        <th>PAIRED-A-RPG</th>
+                        <th>AP-RPG</th>
+                    </tr>
+                </thead>
+                <tbody class="center">
+                    <tr>
+                        <td>PAIRED</td>
+                        <td>0.13</td>
+                        <td>0.0</td>
+                        <td>0.50</td>
+                        <td>0.42</td>
+                    </tr>
+                    <tr>
+                        <td>PAIRED-RPG</td>
+                        <td>0.93</td>
+                        <td>0.0</td>
+                        <td>0.84</td>
+                        <td>0.85</td>
+                    </tr>
+                    <tr>
+                        <td>AT</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                        <td>0.0</td>
+                    </tr>
+                    <tr>
+                        <td>AT-RPG</td>
+                        <td>0.65</td>
+                        <td>0.0</td>
+                        <td>0.72</td>
+                        <td>0.88</td>
+                    </tr>
+                    <tr>
+                        <td>AD</td>
+                        <td>0.00</td>
+                        <td>0.0</td>
+                        <td>0.00</td>
+                        <td>0.00</td>
+                    </tr>
+                    <tr>
+                        <td>AD-RPG</td>
+                        <td>0.98</td>
+                        <td>0.0</td>
+                        <td>0.25</td>
+                        <td>0.96</td>
+                    </tr>
+                    <tr>
+                        <td>Self-play</td>
+                        <td>0.98</td>
+                        <td>0.0</td>
+                        <td>0.16</td>
+                        <td>0.96</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="caption">
+            Table 1: The average reward that policies trained by various algorithms ("Victim" column) achieve
+            against different adversarial attack types. The "Train" column shows the reward achieved during
+            training and the following columns show the reward against different adversarial attack types. The
+            AP attack trivially achieves zero reward because it self-sabotages.
+        </p>
+    </div>
+
 
 
     <!-- <div class="container blog main">
@@ -432,7 +535,8 @@
     <footer>
         <div class="container">
             <p>
-                This website is built on the <a href="https://shikun.io/projects/clarity">Clarity Template</a>, designed
+                This website is built on the <a href="https://shikun.io/projects/clarity">Clarity Template</a>,
+                designed
                 by <a href="https://shikun.io/">Shikun Liu</a>.
             </p>
         </div>
@@ -470,8 +574,7 @@
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); */
         }
 
-        #interactive-video,
-        video {
+        #interactive-video {
             transition: opacity 0.5s ease;
             width: 320px !important;
             height: 320px !important;
