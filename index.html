@@ -315,15 +315,18 @@
         <p class="text">
             RPG can also be used to create rational adversarial attacks that avoid <em>self-sabotage</em>.
             We tested the ability of AP-RPG to discover weaknesses in policies in the <em>Cramped Room</em>
-            Overcooked layout. First, we trained a policy using self-play (SP), then we used AP-RPG to search for a
-            rational adversarial examples. AP-RPG is able to successfully find weaknesses in the SP policy,
-            finding an adversarial policy that achieves rewards of 4.6 and 15.1 respectively, even though
-            this seed achieves a reward of 240 in self-play. Figure 2 illustrate one of these adversarial examples that
-            AP-RPG finds: instead of
-            simply sabotaging the game like AP, instead, AP-RPG discovers that the victim (blue) assumes that the agents
-            will move around each other clockwise. The manipulator in AP-RPG incentivizes the adversary (red) to instead
-            move in a counterclockwise fashion, a perfectly rational strategy, though it happens to be incompatible with
-            the victim.
+            Overcooked layout. First, we trained a policy using self-play (SP) (visualized in Figure 2),
+            then we used both AP and AP-RPG to search for a
+            adversarial attacks. Visualized in Figure 3, AP (red agent) finds an <em>irrational</em> policy that
+            sabotages the game by blocking the plate
+            dispenser, a policy that achieves zero reward, but doesn't reveal any meaningful weaknesses in
+            the SP policy (blue agent). Visualized in Figure 4, AP-RPG (red agent) is able to find a <em>rational</em>
+            policy that
+            achieves a reward of zero against the SP policy that identifies a meaningful weaknesses. Instead of
+            simply sabotaging the game like AP, AP-RPG discovers that the victim (blue agent) assumes that the agents
+            will move around each other clockwise. The manipulator in AP-RPG incentivizes the adversary (red agent) to
+            instead move in a counterclockwise fashion, a perfectly rational strategy, though it happens to be
+            incompatible with the victim.
         </p>
     </div>
 
@@ -363,7 +366,7 @@
                     });
                 </script>
                 <p class="caption">
-                    Figure 4: An ordinary adversarial example (red agent) acts irrationally, simply blocking the
+                    Figure 3: An ordinary adversarial example (red agent) acts irrationally, simply blocking the
                     plate dispenser and preventing progress.
                 </p>
             </div>
@@ -385,7 +388,7 @@
                     });
                 </script>
                 <p class="caption">
-                    Figure 3: A rational adversarial example (red agent) found by AD-RPG learns that the victim (blue)
+                    Figure 4: A rational adversarial example (red agent) found by AD-RPG learns that the victim (blue)
                     can't adapt to counterclockwise movement.
                 </p>
             </div>
