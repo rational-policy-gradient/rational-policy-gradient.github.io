@@ -174,8 +174,9 @@
             both low (0.01) and high (0.05) entropy coefficients. Figure 1 shows the average <em>in-population
                 cross-play</em> reward for
             each algorithm: the average of the cross-play scores from within the population of five seeds of each
-            individual algorithm. AD-RPG performs better than all baselines in the Overcooked environments and
-            comparably or stronger in Hanabi.
+            individual algorithm. <strong>AD-RPG performs better than all baselines across the Overcooked environments
+                and
+                comparably or stronger in Hanabi</strong>.
         </p>
     </div>
 
@@ -330,7 +331,7 @@
         </p>
     </div>
 
-    <div class="container blog main gray">
+    <div class="container blog main">
         <div class="columns-3">
             <div style="width: 100%; position: relative;">
                 <video id="adversarial-sp-video" src="assets/figures/cramped-room-videos/1-1.mp4" style="width: 100%;"
@@ -404,13 +405,7 @@
             Table 1 shows the performance of various fixed victims against
             different types of adversarial attacks. The "Victim" and "Training" columns indicate the
             algorithm used to train the victim and the reward achieved during training, respectively. The "AP",
-            "PAIRED-A-RPG", and "AP-RPG" columns show the performance against these RPG adversarial attacks. As
-            expected, every
-            victim achieves zero reward against the AP attack since the adversary simply learns to self-sabotage the
-            game by collecting no coins. Likewise, the non-RPG variations of algorithms (AT, PAIRED, AD) fail during
-            training due to self-sabotage. PAIRED-A-RPG and AP-RPG are both able to find weaknesses in fixed
-            policies and neither is susceptible to sabotage, PAIRED-RPG and AT-RPG training lead to more robust
-            policies, indicated by high scores against both PAIRED-A-RPG and AP-RPG attacks.
+            "PAIRED-A-RPG", and "AP-RPG" columns show the performance against these RPG adversarial attacks.
         </p>
     </div>
 
@@ -490,6 +485,17 @@
             against different adversarial attack types. The "Train" column shows the reward achieved during
             training and the following columns show the reward against different adversarial attack types. The
             AP attack trivially achieves zero reward because it self-sabotages.
+        </p>
+    </div>
+
+    <div class="container blog main">
+        <p class="text">
+            As expected, every
+            victim achieves zero reward against the AP attack since the adversary simply learns to self-sabotage the
+            game by collecting no coins. Likewise, the non-RPG variations of algorithms (AT, PAIRED, AD) fail during
+            training due to self-sabotage. PAIRED-A-RPG and AP-RPG are both able to find weaknesses in fixed
+            policies and neither is susceptible to sabotage, PAIRED-RPG and AT-RPG training lead to more robust
+            policies, indicated by high scores against both PAIRED-A-RPG and AP-RPG attacks.
         </p>
     </div>
 
