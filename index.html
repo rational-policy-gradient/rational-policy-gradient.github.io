@@ -56,7 +56,7 @@
     <div class="container blog" id="first-content" style="background-color: #E0E4E6;">
         <!-- If you don't have a project cover: Change "blog-title" into "blog-title no-cover"  -->
         <div class="blog-title no-cover">
-            <div class="blog-intro" style="padding-bottom: 0px;">
+            <div class="blog-intro" style="padding-bottom: 30px;">
                 <div>
                     <h1 class="title" style="padding-bottom: 15px;">Robust and Diverse Multi-Agent Learning via Rational
                         Policy Gradient</h1>
@@ -64,37 +64,16 @@
                         Niklas Lauffer<sup> 1</sup>, Ameesh Shah<sup> 1</sup>, Micah Carroll<sup> 1</sup>, Sanjit
                         Seshia<sup> 1</sup>, Stuart Russell<sup> 1</sup>, Michael Dennis<sup> 2</sup>
                     </p>
-                    <p class="author" style="padding-top: 10px;">
+                    <p class="author" style="padding-top: 10px; padding-bottom: 0px;">
                         <sup>1</sup>UC Berkeley &nbsp; &nbsp; <sup>2</sup>Google Deepmind
                     </p>
-                    <p class="abstract">
-                        Adversarial optimization algorithms that explicitly search for flaws in agents' policies have
-                        been successfully applied to finding robust and diverse policies in multi-agent settings.
-                        However, the success of adversarial optimization has been largely limited to zero-sum settings
-                        because its naive application in cooperative settings leads to a critical failure mode: agents
-                        are irrationally incentivized to <em>self-sabotage</em>, blocking the completion of tasks and
-                        halting further learning. To address this, we introduce <em>Rationality-preserving Policy
-                            Optimization (RPO)</em>, a formalism for adversarial optimization that avoids self-sabotage
-                        by ensuring agents remain <em>rational</em>—that is, their policies are optimal with respect to
-                        some possible partner policy. To solve RPO, we develop <em>Rational Policy Gradient (RPG)</em>,
-                        which trains agents to maximize their own reward in a modified version of the original game in
-                        which we use <em>opponent shaping</em> techniques to optimize the adversarial objective. RPG
-                        enables us to extend a variety of existing adversarial optimization algorithms that, no longer
-                        subject to the limitations of self-sabotage, can find adversarial examples, improve robustness
-                        and adaptability, and learn diverse policies. We empirically validate that our approach achieves
-                        strong performance in several popular cooperative and general-sum environments.
-                    </p>
-                    <!-- Using FontAwesome Pro -->
-                    <!-- <div class="info">
-                        <div>
-                            <a href="https://arxiv.org" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)"> Paper <i class="far fa-book-open"></i></a> &nbsp;&nbsp; 
-                            <a href="https://github.com" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)">Code <i class="far fa-code"></i></a>  &nbsp;&nbsp; 
-                            <a href="https://www.microsoft.com/en-gb/microsoft-365/powerpoint" class="button icon" style="background-color: rgba(255, 255, 255, 0.3);">Slides <i class="far fa-presentation"></i></a>  &nbsp;&nbsp; 
-                            <a href="https://huggingface.co/spaces" class="button icon" style="background-color: rgba(255, 255, 255, 0.3)">Demo <i class="fa-light fa-face-smiling-hands"></i></a>
-                        </div>
-                    </div> -->
-
-                    <!-- Using FontAwesome Free -->
+                    <div class="info" style="padding-top: 10px; padding-bottom: 0px;">
+                        <p>NeurIPS 2025</p>
+                    </div>
+                    <div class="blog-cover" style="padding-top: 30px; padding-bottom: 30px;">
+                        <img class="foreground" src="assets/figures/rpg-fig1.png"
+                            style="width: 120%; max-width: none; height: auto; display: block; margin-left: -10%;">
+                    </div>
                     <div class="info">
                         <div>
                             <a href="paper.pdf" class="button icon" style="background-color: rgba(255, 255, 255, 0.5)">
@@ -113,16 +92,24 @@
                                     class="fa-solid fa-laptop-code"></i></a> -->
                         </div>
                     </div>
+                    <p class="abstract">
+                        Adversarial optimization algorithms that explicitly search for flaws in agents' policies have
+                        been successfully applied to finding robust and diverse policies in multi-agent settings.
+                        However, the success of adversarial optimization has been largely limited to zero-sum settings
+                        because its naive application in cooperative settings leads to a critical failure mode: agents
+                        are irrationally incentivized to <em>self-sabotage</em>, blocking the completion of tasks and
+                        halting further learning. To address this, we introduce <em>Rationality-preserving Policy
+                            Optimization (RPO)</em>, a formalism for adversarial optimization that avoids self-sabotage
+                        by ensuring agents remain <em>rational</em>—that is, their policies are optimal with respect to
+                        some possible partner policy. To solve RPO, we develop <em>Rational Policy Gradient (RPG)</em>,
+                        which trains agents to maximize their own reward in a modified version of the original game in
+                        which we use <em>opponent shaping</em> techniques to optimize the adversarial objective. RPG
+                        enables us to extend a variety of existing adversarial optimization algorithms that, no longer
+                        subject to the limitations of self-sabotage, can find adversarial examples, improve robustness
+                        and adaptability, and learn diverse policies. We empirically validate that our approach achieves
+                        strong performance in several popular cooperative and general-sum environments.
+                    </p>
                 </div>
-
-                <div class="info">
-                    <p>NeurIPS 2025</p>
-                </div>
-            </div>
-
-            <div class="blog-cover">
-                <img class="foreground" src="assets/figures/rpg-fig1.png" style="width: 92%; height: auto;">
-                <!-- <img class="background" src="assets/figures/fig1_left-1.png"> -->
             </div>
         </div>
     </div>
@@ -139,7 +126,7 @@
             policy to be
             optimal with respect to at least one policy that other agent(s) might play. This can be thought of as
             enforcing the agent to be <em>rational</em>: i.e., the agent must be utility-maximizing for some choice of
-            teammates. RPO can be formally expressed as the following optimization problem:
+            teammates. RPO formalizes the rationality constraint as the following optimization problem:
         </p>
         $$
         \begin{aligned}
@@ -414,7 +401,8 @@
             Table 1 shows the performance of various fixed victims against
             different types of adversarial attacks. The "Victim" and "Training" columns indicate the
             algorithm used to train the victim and the reward achieved during training, respectively. The "AP",
-            "PAIRED-A-RPG", and "AP-RPG" columns show the performance against these RPG adversarial attacks. As expected, every
+            "PAIRED-A-RPG", and "AP-RPG" columns show the performance against these RPG adversarial attacks. As
+            expected, every
             victim achieves zero reward against the AP attack since the adversary simply learns to self-sabotage the
             game by collecting no coins. Likewise, the non-RPG variations of algorithms (AT, PAIRED, AD) fail during
             training due to self-sabotage. PAIRED-A-RPG and AP-RPG are both able to find weaknesses in fixed
