@@ -336,11 +336,16 @@
             <div style="width: 100%; position: relative;">
                 <video id="adversarial-sp-video" src="assets/figures/cramped-room-videos/1-1.mp4" style="width: 100%;"
                     autoplay loop muted playsinline></video>
+                <!-- <div id="reset-flash" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); 
+                    background: rgba(255, 255, 255, 0); color: rgba(255, 255, 255, 0.475); padding: 8px 16px; 
+                    font-weight: bold; font-size: 24px; opacity: 0; pointer-events: none; z-index: 10;">
+                    RESET
+                </div> -->
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         var spVideo = document.getElementById('adversarial-sp-video');
                         if (spVideo) {
-                            spVideo.playbackRate = 0.5;
+                            spVideo.playbackRate = 0.3;
                         }
                     });
                 </script>
@@ -375,11 +380,11 @@
             <div style="width: 100%; position: relative;">
                 <video id="adversarial-video" src="assets/figures/adversarial-attack-gif-trimmed.mp4"
                     style="width: 100%;" autoplay loop muted playsinline></video>
-                <!-- <div id="reset-flash" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); 
+                <div id="reset-flash" style="position: absolute; top: 0px; left: 50%; transform: translateX(-50%); 
                     background: rgba(255, 255, 255, 0); color: rgba(255, 255, 255, 0.475); padding: 8px 16px; 
                     font-weight: bold; font-size: 24px; opacity: 0; pointer-events: none; z-index: 10;">
                     RESET
-                </div> -->
+                </div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         var spVideo = document.getElementById('adversarial-video');
