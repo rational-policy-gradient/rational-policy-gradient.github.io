@@ -64,15 +64,11 @@
                         Niklas Lauffer<sup> 1</sup>, Ameesh Shah<sup> 1</sup>, Micah Carroll<sup> 1</sup>, Sanjit
                         Seshia<sup> 1</sup>, Stuart Russell<sup> 1</sup>, Michael Dennis<sup> 2</sup>
                     </p>
-                    <p class="author" style="padding-top: 10px; padding-bottom: 0px;">
+                    <p class="author" style="padding-top: 5px; padding-bottom: 0px;">
                         <sup>1</sup>UC Berkeley &nbsp; &nbsp; <sup>2</sup>Google Deepmind
                     </p>
-                    <div class="info" style="padding-top: 10px; padding-bottom: 0px;">
+                    <div class="info" style="padding-top: 5px; padding-bottom: 10px;">
                         <p>NeurIPS 2025</p>
-                    </div>
-                    <div class="blog-cover" style="padding-top: 30px; padding-bottom: 30px;">
-                        <img class="foreground" src="assets/figures/rpg-fig1.png"
-                            style="width: 120%; max-width: none; height: auto; display: block; margin-left: -10%;">
                     </div>
                     <div class="info">
                         <div>
@@ -81,7 +77,7 @@
                             <a href="https://github.com/niklaslauffer/rational-policy-gradient" class="button icon"
                                 style="background-color: rgba(255, 255, 255, 0.5)">Code <i
                                     class="fa-solid fa-code"></i></a> &nbsp;&nbsp;
-                            <a href="cross-play-grids.html" class="button icon"
+                            <a href="#interactive-visualization" class="button icon"
                                 style="background-color: rgba(255, 255, 255, 0.5)">Interactive Visualization <i
                                     class="fa-solid fa-sliders"></i></a> &nbsp;&nbsp;
                             <!-- <a href="https://www.microsoft.com/en-gb/microsoft-365/powerpoint" class="button icon"
@@ -92,6 +88,9 @@
                                     class="fa-solid fa-laptop-code"></i></a> -->
                         </div>
                     </div>
+                    <!-- <div class="info" style="padding-top: 5px; padding-bottom: 10px;">
+                        <p>Abstract</p>
+                    </div> -->
                     <p class="abstract">
                         Adversarial optimization algorithms that explicitly search for flaws in agents' policies have
                         been successfully applied to finding robust and diverse policies in multi-agent settings.
@@ -113,6 +112,575 @@
             </div>
         </div>
     </div>
+
+    <div id="interactive-visualization" class="container blog extra-large gray-linear"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0px; min-height: 600px;">
+
+        <!-- Environment Selector - Top of entire container -->
+        <div
+            style="margin-bottom: 20px; display: flex; gap: 8px; align-items: center; width: 100%; justify-content: center; flex-wrap: wrap;">
+            <button onclick="switchEnvironment('forced-coord')" class="env-button active" data-env="forced-coord"
+                style="padding: 8px 16px; font-size: 14px; text-align: center; white-space: nowrap; background-color: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Forced Coordination
+            </button>
+            <button onclick="switchEnvironment('cramped-room')" class="env-button" data-env="cramped-room"
+                style="padding: 8px 16px; font-size: 14px; text-align: center; white-space: nowrap; background-color: #dfdfdf; color: #333; border: none; border-radius: 4px; cursor: pointer;">
+                Cramped Room
+            </button>
+            <button onclick="switchEnvironment('coordination-ring')" class="env-button" data-env="coordination-ring"
+                style="padding: 8px 16px; font-size: 14px; text-align: center; white-space: nowrap; background-color: #dfdfdf; color: #333; border: none; border-radius: 4px; cursor: pointer;">
+                Coordination Ring
+            </button>
+            <button onclick="switchEnvironment('counter-circuit')" class="env-button" data-env="counter-circuit"
+                style="padding: 8px 16px; font-size: 14px; text-align: center; white-space: nowrap; background-color: #dfdfdf; color: #333; border: none; border-radius: 4px; cursor: pointer;">
+                Counter Circuit
+            </button>
+            <button onclick="switchEnvironment('asymmetric-advantage')" class="env-button"
+                data-env="asymmetric-advantage"
+                style="padding: 8px 16px; font-size: 14px; text-align: center; white-space: nowrap; background-color: #dfdfdf; color: #333; border: none; border-radius: 4px; cursor: pointer;">
+                Asymmetric Advantage
+            </button>
+        </div>
+
+        <!-- Main content row with heatmap and video -->
+        <div
+            style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0px; width: 100%;">
+            <!-- Left column - Heatmap and grid -->
+            <div style="flex: 1; max-width: 50%; display: flex; flex-direction: column; align-items: center;">
+                <!-- Interactive Title -->
+                <h3 style="margin-bottom: 10px; text-align: center; color: #333;">Interactive grid: click any square
+                    below!
+                </h3>
+
+                <div id="heatmap-container" style="position: relative; display: inline-block; width: 100%; margin: 0;">
+                    <img id="heatmap-image" src="assets/figures/rpg-forced-coord-heatmap.png"
+                        style="width: 100%; height: auto; display: block;">
+                    <!-- Interactive grid overlay - 6x6 grid -->
+                    <div id="grid-overlay">
+                        <!-- Row 0 -->
+                        <div class="grid-cell" data-env="forced-coord" data-row="0" data-col="0" data-video="0-0.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="0" data-col="1" data-video="0-1.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="0" data-col="2" data-video="0-2.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="0" data-col="3" data-video="0-3.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="0" data-col="4" data-video="0-4.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="0" data-col="5" data-video="0-5.mp4">
+                        </div>
+                        <!-- Row 1 -->
+                        <div class="grid-cell" data-env="forced-coord" data-row="1" data-col="0" data-video="1-0.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="1" data-col="1" data-video="1-1.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="1" data-col="2" data-video="1-2.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="1" data-col="3" data-video="1-3.mp4">
+                        </div>
+                        <div class="grid-cell selected" data-env="forced-coord" data-row="1" data-col="4"
+                            data-video="1-4.mp4"></div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="1" data-col="5" data-video="1-5.mp4">
+                        </div>
+                        <!-- Row 2 -->
+                        <div class="grid-cell" data-env="forced-coord" data-row="2" data-col="0" data-video="2-0.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="2" data-col="1" data-video="2-1.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="2" data-col="2" data-video="2-2.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="2" data-col="3" data-video="2-3.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="2" data-col="4" data-video="2-4.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="2" data-col="5" data-video="2-5.mp4">
+                        </div>
+                        <!-- Row 3 -->
+                        <div class="grid-cell" data-env="forced-coord" data-row="3" data-col="0" data-video="3-0.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="3" data-col="1" data-video="3-1.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="3" data-col="2" data-video="3-2.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="3" data-col="3" data-video="3-3.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="3" data-col="4" data-video="3-4.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="3" data-col="5" data-video="3-5.mp4">
+                        </div>
+                        <!-- Row 4 -->
+                        <div class="grid-cell" data-env="forced-coord" data-row="4" data-col="0" data-video="4-0.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="4" data-col="1" data-video="4-1.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="4" data-col="2" data-video="4-2.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="4" data-col="3" data-video="4-3.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="4" data-col="4" data-video="4-4.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="4" data-col="5" data-video="4-5.mp4">
+                        </div>
+                        <!-- Row 5 -->
+                        <div class="grid-cell" data-env="forced-coord" data-row="5" data-col="0" data-video="5-0.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="5" data-col="1" data-video="5-1.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="5" data-col="2" data-video="5-2.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="5" data-col="3" data-video="5-3.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="5" data-col="4" data-video="5-4.mp4">
+                        </div>
+                        <div class="grid-cell" data-env="forced-coord" data-row="5" data-col="5" data-video="5-5.mp4">
+                        </div>
+
+                        <!-- Cramped Room Environment Grid Cells -->
+                        <div class="grid-cell selected" data-env="cramped-room" data-row="0" data-col="0"
+                            data-video="0-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="0" data-col="1" data-video="0-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="0" data-col="2" data-video="0-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="0" data-col="3" data-video="0-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="0" data-col="4" data-video="0-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="0" data-col="5" data-video="0-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="1" data-col="0" data-video="1-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="1" data-col="1" data-video="1-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="1" data-col="2" data-video="1-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="1" data-col="3" data-video="1-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="1" data-col="4" data-video="1-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="1" data-col="5" data-video="1-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="2" data-col="0" data-video="2-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="2" data-col="1" data-video="2-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="2" data-col="2" data-video="2-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="2" data-col="3" data-video="2-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="2" data-col="4" data-video="2-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="2" data-col="5" data-video="2-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="3" data-col="0" data-video="3-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="3" data-col="1" data-video="3-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="3" data-col="2" data-video="3-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="3" data-col="3" data-video="3-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="3" data-col="4" data-video="3-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="3" data-col="5" data-video="3-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="4" data-col="0" data-video="4-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="4" data-col="1" data-video="4-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="4" data-col="2" data-video="4-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="4" data-col="3" data-video="4-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="4" data-col="4" data-video="4-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="4" data-col="5" data-video="4-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="5" data-col="0" data-video="5-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="5" data-col="1" data-video="5-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="5" data-col="2" data-video="5-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="5" data-col="3" data-video="5-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="5" data-col="4" data-video="5-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="cramped-room" data-row="5" data-col="5" data-video="5-5.mp4"
+                            style="display: none;"></div>
+
+                        <!-- Other Environment Grid Cells (simplified for brevity) -->
+                        <!-- Asymmetric Advantage -->
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="0" data-col="0"
+                            data-video="0-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="0" data-col="1"
+                            data-video="0-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="0" data-col="2"
+                            data-video="0-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="0" data-col="3"
+                            data-video="0-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="0" data-col="4"
+                            data-video="0-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="0" data-col="5"
+                            data-video="0-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="1" data-col="0"
+                            data-video="1-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="1" data-col="1"
+                            data-video="1-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="1" data-col="2"
+                            data-video="1-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="1" data-col="3"
+                            data-video="1-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="1" data-col="4"
+                            data-video="1-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="1" data-col="5"
+                            data-video="1-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="2" data-col="0"
+                            data-video="2-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="2" data-col="1"
+                            data-video="2-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="2" data-col="2"
+                            data-video="2-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="2" data-col="3"
+                            data-video="2-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="2" data-col="4"
+                            data-video="2-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="2" data-col="5"
+                            data-video="2-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="3" data-col="0"
+                            data-video="3-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="3" data-col="1"
+                            data-video="3-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="3" data-col="2"
+                            data-video="3-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="3" data-col="3"
+                            data-video="3-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="3" data-col="4"
+                            data-video="3-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="3" data-col="5"
+                            data-video="3-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="4" data-col="0"
+                            data-video="4-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="4" data-col="1"
+                            data-video="4-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="4" data-col="2"
+                            data-video="4-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="4" data-col="3"
+                            data-video="4-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell selected" data-env="asymmetric-advantage" data-row="4" data-col="4"
+                            data-video="4-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="4" data-col="5"
+                            data-video="4-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="5" data-col="0"
+                            data-video="5-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="5" data-col="1"
+                            data-video="5-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="5" data-col="2"
+                            data-video="5-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="5" data-col="3"
+                            data-video="5-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="5" data-col="4"
+                            data-video="5-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="asymmetric-advantage" data-row="5" data-col="5"
+                            data-video="5-5.mp4" style="display: none;"></div>
+
+                        <!-- Coordination Ring -->
+                        <div class="grid-cell" data-env="coordination-ring" data-row="0" data-col="0"
+                            data-video="0-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="0" data-col="1"
+                            data-video="0-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="0" data-col="2"
+                            data-video="0-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="0" data-col="3"
+                            data-video="0-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="0" data-col="4"
+                            data-video="0-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="0" data-col="5"
+                            data-video="0-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="1" data-col="0"
+                            data-video="1-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="1" data-col="1"
+                            data-video="1-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="1" data-col="2"
+                            data-video="1-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="1" data-col="3"
+                            data-video="1-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="1" data-col="4"
+                            data-video="1-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="1" data-col="5"
+                            data-video="1-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="2" data-col="0"
+                            data-video="2-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="2" data-col="1"
+                            data-video="2-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="2" data-col="2"
+                            data-video="2-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="2" data-col="3"
+                            data-video="2-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="2" data-col="4"
+                            data-video="2-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="2" data-col="5"
+                            data-video="2-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="3" data-col="0"
+                            data-video="3-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="3" data-col="1"
+                            data-video="3-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="3" data-col="2"
+                            data-video="3-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="3" data-col="3"
+                            data-video="3-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="3" data-col="4"
+                            data-video="3-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="3" data-col="5"
+                            data-video="3-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="4" data-col="0"
+                            data-video="4-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="4" data-col="1"
+                            data-video="4-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="4" data-col="2"
+                            data-video="4-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="4" data-col="3"
+                            data-video="4-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell selected" data-env="coordination-ring" data-row="4" data-col="4"
+                            data-video="4-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="4" data-col="5"
+                            data-video="4-5.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="5" data-col="0"
+                            data-video="5-0.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="5" data-col="1"
+                            data-video="5-1.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="5" data-col="2"
+                            data-video="5-2.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="5" data-col="3"
+                            data-video="5-3.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="5" data-col="4"
+                            data-video="5-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="coordination-ring" data-row="5" data-col="5"
+                            data-video="5-5.mp4" style="display: none;"></div>
+
+                        <!-- Counter Circuit -->
+                        <div class="grid-cell" data-env="counter-circuit" data-row="0" data-col="0" data-video="0-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="0" data-col="1" data-video="0-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="0" data-col="2" data-video="0-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="0" data-col="3" data-video="0-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="0" data-col="4" data-video="0-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="0" data-col="5" data-video="0-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="1" data-col="0" data-video="1-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="1" data-col="1" data-video="1-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="1" data-col="2" data-video="1-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="1" data-col="3" data-video="1-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="1" data-col="4" data-video="1-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="1" data-col="5" data-video="1-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="2" data-col="0" data-video="2-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="2" data-col="1" data-video="2-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="2" data-col="2" data-video="2-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="2" data-col="3" data-video="2-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="2" data-col="4" data-video="2-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="2" data-col="5" data-video="2-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="3" data-col="0" data-video="3-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="3" data-col="1" data-video="3-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="3" data-col="2" data-video="3-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="3" data-col="3" data-video="3-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="3" data-col="4" data-video="3-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="3" data-col="5" data-video="3-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="4" data-col="0" data-video="4-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="4" data-col="1" data-video="4-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="4" data-col="2" data-video="4-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="4" data-col="3" data-video="4-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell selected" data-env="counter-circuit" data-row="4" data-col="4"
+                            data-video="4-4.mp4" style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="4" data-col="5" data-video="4-5.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="5" data-col="0" data-video="5-0.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="5" data-col="1" data-video="5-1.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="5" data-col="2" data-video="5-2.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="5" data-col="3" data-video="5-3.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="5" data-col="4" data-video="5-4.mp4"
+                            style="display: none;"></div>
+                        <div class="grid-cell" data-env="counter-circuit" data-row="5" data-col="5" data-video="5-5.mp4"
+                            style="display: none;"></div>
+                    </div>
+                </div>
+                <!-- Grid Selection Buttons -->
+                <div id="grid-selection-buttons"
+                    style="margin-top: 10px; margin-bottom: 5px; display: flex; flex-direction: row; gap: 8px; align-items: center; width: 100%; justify-content: center;">
+                    <!-- Forced Coordination buttons -->
+                    <button onclick="selectGridCell(0, 1)" class="button grid-button" data-env="forced-coord"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap;">
+                        SP fails to generalize
+                    </button>
+                    <button onclick="selectGridCell(0, 4)" class="button grid-button" data-env="forced-coord"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap;">
+                        AD-RPG adapts...
+                    </button>
+                    <button onclick="selectGridCell(1, 4)" class="button grid-button" data-env="forced-coord"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap;">
+                        ...to any strategy
+                    </button>
+
+                    <!-- Cramped Room buttons -->
+                    <button onclick="selectGridCell(0, 0)" class="button grid-button" data-env="cramped-room"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        SP fails in-population
+                    </button>
+                    <button onclick="selectGridCell(4, 4)" class="button grid-button" data-env="cramped-room"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        AD-RPG succeeds across seeds...
+                    </button>
+                    <button onclick="selectGridCell(0, 2)" class="button grid-button" data-env="cramped-room"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        ...and other algorithms
+                    </button>
+
+                    <!-- Coordination Ring buttons -->
+                    <button onclick="selectGridCell(0, 0)" class="button grid-button" data-env="coordination-ring"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        SP ends up stuck
+                    </button>
+                    <button onclick="selectGridCell(2, 2)" class="button grid-button" data-env="coordination-ring"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        So does AD
+                    </button>
+                    <button onclick="selectGridCell(4, 4)" class="button grid-button" data-env="coordination-ring"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        AD-RPG succeeds
+                    </button>
+
+                    <!-- Counter Circuit buttons -->
+                    <button onclick="selectGridCell(0, 0)" class="button grid-button" data-env="counter-circuit"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        SP ends up stuck
+                    </button>
+                    <button onclick="selectGridCell(2, 2)" class="button grid-button" data-env="counter-circuit"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        AD doesn't make it far
+                    </button>
+                    <button onclick="selectGridCell(4, 4)" class="button grid-button" data-env="counter-circuit"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        AD-RPG learns patience
+                    </button>
+
+                    <!-- Asymmetric Advantage buttons -->
+                    <button onclick="selectGridCell(0, 0)" class="button grid-button" data-env="asymmetric-advantage"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        SP converges on one strategy
+                    </button>
+                    <button onclick="selectGridCell(4, 4)" class="button grid-button" data-env="asymmetric-advantage"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        AD-RPG also succeeds...
+                    </button>
+                    <button onclick="selectGridCell(1, 4)" class="button grid-button" data-env="asymmetric-advantage"
+                        style="padding: 6px 12px; font-size: 12px; text-align: center; white-space: nowrap; display: none;">
+                        ...and is able to adapt across partners
+                    </button>
+                </div>
+                <!-- <div style="height: 60px; display: flex; align-items: flex-start;">
+                <p class="caption" style="margin-top: 10px; width: 100%; text-align: center; margin-bottom: 0;">
+                    <b>Interactive cross-play grid in the <em>Forced Coordination</em> environment</b>.
+                </p>
+            </div> -->
+            </div>
+
+            <!-- Right column - Video player and controls -->
+            <div style="flex: 1; max-width: 45%; display: flex; flex-direction: column; align-items: center;">
+                <div class="video-control">
+                    <a class="button" onclick="SlowVideo('eschernet')"><i class="fa-solid fa-backward"></i></a>
+                    <!-- Using FontAwesome Pro -->
+                    <!-- <a class="button"onclick="ToggleVideo('eschernet')"><i class="fa-solid fa-play-pause"></i></a> -->
+
+                    <!-- Using FontAwesome Free -->
+                    <a class="button" id="toggle-video-btn" onclick="ToggleVideo('eschernet')"><i
+                            class="fa-solid fa-pause"></i></a>
+
+                    <a class="button" onclick="FastVideo('eschernet')"><i class="fa-solid fa-forward"></i></a>
+                    <a class="button" onclick="RestartVideo('eschernet')"><i class="fa-solid fa-rotate-left"></i></a>
+                </div>
+
+                <div class="">
+                    <p class="video-speed" id="eschernet-msg">
+                        Speed: ×1.00
+                    </p>
+                </div>
+
+                <div class="video-container">
+                    <div style="width: 100%; max-width: 480px;">
+                        <video id="interactive-video" loop playsinline muted autoplay class="eschernet-video"
+                            src="assets/figures/forced-coordination-videos/1-4.mp4"
+                            style=" width: 100%; max-width: 480px; height: auto;">
+                        </video>
+                        <div style="height: 60px; display: flex; align-items: flex-start;">
+                            <p class="caption inline center" id="video-caption"
+                                style="width: 100%; text-align: center; margin-top: 5px; margin-bottom: 0;">Click on a
+                                grid
+                                square to the left to load
+                                corresponding
+                                video</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Close the main content row -->
+    </div>
+
+
+    <div class="container blog main">
+        <!-- <h1>
+            Interactive Cross-play Grids
+        </h1> -->
+        <p class="text">
+            The interactive cross-play grids above show test-time robustness across different partners
+            in the form of
+            <em>cross-play grids</em>. Each row and column represents a single seed trained by either self-play (SP)
+            with low or high entropy regularization, adversarial diversity (AD), or adversarial diversity - RPG
+            (AD-RPG) (ours). The color of each square in the cross-play grid represents the average reward of the
+            policies from the two associated seeds played against one another. AD-RPG consistently generalizes better
+            across different partners.
+            Click on any square in the grid to see a sampled rollout of the pair of policies.
+        </p>
+    </div>
+
+    <!-- <div class="container blog main">
+        <p class="text">
+            When AD-RPG is the blue agent, it's able to adapt to any strategy from its partner. Other algorithms aren't
+            as robust as they fail to generalize outside of the fixed strategy that their algorithm happens to converge
+            on. For example, high and low entropy self-play converge to passing onions on different parts of the
+            counter, and thus fail to coordinate when paired with each other. AD-RPG is flexible enough to able to adapt
+            to either.
+        </p>
+    </div> -->
 
 
     <div class="container blog main first" id="blog-main">
@@ -150,15 +718,18 @@
             another in the original <em>base environment</em>).
             The manipulators are discarded after training and the trained base agents give the solution to the
             RPO-version of the adversarial objective -- whether that be related to robustness, diversity, or some other
-            objective.
+            objective. RPG allows us to use adversarial optimization in cooperative settings to
+            find adversarial examples, robustify behavior, and discover diverse policies:
         </p>
     </div>
+    <!-- <div class="blog-cover" style="padding-top: 30px; padding-bottom: 30px;">
+        <img class="foreground" src="assets/figures/rpg-fig1.png" style="width: 100%; height: auto; display: block;">
+    </div> -->
     <div class="container blog large">
-        <img src="assets/figures/rpg-robustness.png" style="width: 100%;">
+        <img src="assets/figures/rpg-fig1.png" style="width: 100%;">
         <p class="caption">
-            Figure 1: In-population cross-play rewards for different algorithms across environments. Points
-            represent pairs of seeds, bar charts represent means, and error bars represent 95% confidence
-            intervals.
+            Figure 1: Rational policy gradient (RPG) allows finding rational adversarial examples, robustifying
+            behavior, and discovering diverse policies.
         </p>
     </div>
     <div class="container blog main" id="blog-main">
@@ -171,7 +742,7 @@
             finding strategies that other agents in the population perform poorly against, ultimately improving the
             robustness of the entire population. We compare AD-RPG against classical adversarial diversity (AD) as well
             as self-play (SP) with
-            both low (0.01) and high (0.05) entropy coefficients. Figure 1 shows the average <em>in-population
+            both low (0.01) and high (0.05) entropy coefficients. Figure 2 shows the average <em>in-population
                 cross-play</em> reward for
             each algorithm: the average of the cross-play scores from within the population of five seeds of each
             individual algorithm. <strong>AD-RPG performs better than all baselines across the Overcooked environments
@@ -179,6 +750,15 @@
                 comparably or stronger in Hanabi</strong>.
         </p>
     </div>
+    <div class="container blog large">
+        <img src="assets/figures/rpg-robustness.png" style="width: 100%;">
+        <p class="caption">
+            Figure 2: In-population cross-play rewards for different algorithms across environments. Points
+            represent pairs of seeds, bar charts represent means, and error bars represent 95% confidence
+            intervals.
+        </p>
+    </div>
+
 
 
     <!-- <div class="container blog main large gray-linear">
@@ -190,125 +770,6 @@
         </p>
     </div> -->
 
-    <div class="container blog main">
-        <h1>
-            Interactive Cross-play Grids
-        </h1>
-
-        <p class="text">
-            Figure 2 shows robustness results for different environments in the form of
-            <em>cross-play grids</em>. In our cross-play grid, each row represents a single seed trained by the
-            specified algorithm. The first five rows represent SP with an entropy coefficient of 0.01 and the second
-            five represent self-play (SP) with an entropy coefficient of 0.05. The following ten rows represent the five
-            pairs of policies from each run of adversarial diversity (AD) (since we use a population of size two) and
-            the last ten rows represent adversarial diversity - RPG (AD-RPG)
-            in the same fashion. Each column represents the same so that in diagonal entries, both players come from the
-            same seed. Each square in the cross-play grid represents the average reward of the policies from the two
-            associated seeds played against one another averaged over 1000 rollouts of the game.
-            <strong>Figure 1</strong> shows the average <em>intra-population cross-play</em> reward for each
-            algorithm: the average of the cross-play scores from within the population of seeds of each individual
-            algorithm. Click on any square in the grid below to see a sampled rollout of the pair of policies.
-        </p>
-    </div>
-
-    <div class="container blog main gray-linear" style="display: flex; flex-direction: column; align-items: center;">
-        <div id="heatmap-container" style="position: relative; display: inline-block; width: 80%; margin: 0 auto;">
-            <img id="heatmap-image" src="assets/figures/rpg-forced-coord-heatmap.png"
-                style="width: 100%; height: auto; display: block;">
-            <!-- Interactive grid overlay - 6x6 grid -->
-            <div id="grid-overlay">
-                <!-- Row 0 -->
-                <div class="grid-cell" data-row="0" data-col="0" data-video="0-0.mp4"></div>
-                <div class="grid-cell" data-row="0" data-col="1" data-video="0-1.mp4"></div>
-                <div class="grid-cell" data-row="0" data-col="2" data-video="0-2.mp4"></div>
-                <div class="grid-cell" data-row="0" data-col="3" data-video="0-3.mp4"></div>
-                <div class="grid-cell" data-row="0" data-col="4" data-video="0-4.mp4"></div>
-                <div class="grid-cell" data-row="0" data-col="5" data-video="0-5.mp4"></div>
-                <!-- Row 1 -->
-                <div class="grid-cell" data-row="1" data-col="0" data-video="1-0.mp4"></div>
-                <div class="grid-cell" data-row="1" data-col="1" data-video="1-1.mp4"></div>
-                <div class="grid-cell" data-row="1" data-col="2" data-video="1-2.mp4"></div>
-                <div class="grid-cell" data-row="1" data-col="3" data-video="1-3.mp4"></div>
-                <div class="grid-cell selected" data-row="1" data-col="4" data-video="1-4.mp4"></div>
-                <div class="grid-cell" data-row="1" data-col="5" data-video="1-5.mp4"></div>
-                <!-- Row 2 -->
-                <div class="grid-cell" data-row="2" data-col="0" data-video="2-0.mp4"></div>
-                <div class="grid-cell" data-row="2" data-col="1" data-video="2-1.mp4"></div>
-                <div class="grid-cell" data-row="2" data-col="2" data-video="2-2.mp4"></div>
-                <div class="grid-cell" data-row="2" data-col="3" data-video="2-3.mp4"></div>
-                <div class="grid-cell" data-row="2" data-col="4" data-video="2-4.mp4"></div>
-                <div class="grid-cell" data-row="2" data-col="5" data-video="2-5.mp4"></div>
-                <!-- Row 3 -->
-                <div class="grid-cell" data-row="3" data-col="0" data-video="3-0.mp4"></div>
-                <div class="grid-cell" data-row="3" data-col="1" data-video="3-1.mp4"></div>
-                <div class="grid-cell" data-row="3" data-col="2" data-video="3-2.mp4"></div>
-                <div class="grid-cell" data-row="3" data-col="3" data-video="3-3.mp4"></div>
-                <div class="grid-cell" data-row="3" data-col="4" data-video="3-4.mp4"></div>
-                <div class="grid-cell" data-row="3" data-col="5" data-video="3-5.mp4"></div>
-                <!-- Row 4 -->
-                <div class="grid-cell" data-row="4" data-col="0" data-video="4-0.mp4"></div>
-                <div class="grid-cell" data-row="4" data-col="1" data-video="4-1.mp4"></div>
-                <div class="grid-cell" data-row="4" data-col="2" data-video="4-2.mp4"></div>
-                <div class="grid-cell" data-row="4" data-col="3" data-video="4-3.mp4"></div>
-                <div class="grid-cell" data-row="4" data-col="4" data-video="4-4.mp4"></div>
-                <div class="grid-cell" data-row="4" data-col="5" data-video="4-5.mp4"></div>
-                <!-- Row 5 -->
-                <div class="grid-cell" data-row="5" data-col="0" data-video="5-0.mp4"></div>
-                <div class="grid-cell" data-row="5" data-col="1" data-video="5-1.mp4"></div>
-                <div class="grid-cell" data-row="5" data-col="2" data-video="5-2.mp4"></div>
-                <div class="grid-cell" data-row="5" data-col="3" data-video="5-3.mp4"></div>
-                <div class="grid-cell" data-row="5" data-col="4" data-video="5-4.mp4"></div>
-                <div class="grid-cell" data-row="5" data-col="5" data-video="5-5.mp4"></div>
-            </div>
-        </div>
-        <p class="caption">
-            Figure 2: <b>Cross-play grid in the <em>Forced Coordination</em> environment:</b> click any grid square
-            to see a sampled rollout below.
-        </p>
-        <div class="video-control">
-            <a class="button" onclick="SlowVideo('eschernet')"><i class="fa-solid fa-backward"></i></a>
-            <!-- Using FontAwesome Pro -->
-            <!-- <a class="button"onclick="ToggleVideo('eschernet')"><i class="fa-solid fa-play-pause"></i></a> -->
-
-            <!-- Using FontAwesome Free -->
-            <a class="button" id="toggle-video-btn" onclick="ToggleVideo('eschernet')"><i
-                    class="fa-solid fa-pause"></i></a>
-
-            <a class="button" onclick="FastVideo('eschernet')"><i class="fa-solid fa-forward"></i></a>
-            <a class="button" onclick="RestartVideo('eschernet')"><i class="fa-solid fa-rotate-left"></i></a>
-        </div>
-
-        <div class="">
-            <p class="video-speed" id="eschernet-msg">
-                Speed: ×1.00
-            </p>
-        </div>
-
-        <div class="video-container">
-            <div>
-                <video id="interactive-video" loop playsinline muted autoplay class="eschernet-video"
-                    src="assets/figures/forced-coordination-videos/1-4.mp4"
-                    style="width: 480px; max-width: 100%; height: auto;">
-                </video>
-                <p class="caption inline center" id="video-caption">Click on a grid square above to load corresponding
-                    video</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="container blog main">
-        <p class="text">
-            When AD-RPG is the blue agent, it's able to adapt to any strategy from its partner. Other algorithms aren't
-            as robust as they fail to generalize outside of the fixed strategy that their algorithm happens to converge
-            on. For example, high and low entropy self-play converge to passing onions on different parts of the
-            counter, and thus fail to coordinate when paired with each other. AD-RPG is flexible enough to able to adapt
-            to either.
-        </p>
-        <p class="text">
-            Click <a href="cross-play-grids.html" target="_blank">here</a> for
-            visualizations of cross-play grids for other environments.
-        </p>
-    </div>
 
 
     <div class="container blog main">
@@ -567,13 +1028,27 @@
         /* CUSTOMIZE THIS SECTION FOR DIFFERENT HIGHLIGHTING STYLES */
         .grid-cell.selected {
             /* Option 1: Current blue highlighting */
-            background: rgba(0, 242, 255, 0.093);
-            border: 5px solid rgb(0, 169, 68);
+            background: rgba(115, 213, 255, 0.174);
+            border: 5px solid #2196F3;
 
             /* Option 8: Glowing effect - uncomment to use */
             /* background: rgba(0, 255, 255, 0.2);
             border: 2px solid rgba(0, 255, 255, 1);
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); */
+        }
+
+        /* Environment selector button styles */
+        .env-button {
+            transition: all 0.3s ease;
+        }
+
+        .env-button:hover {
+            opacity: 0.8;
+        }
+
+        .env-button.active {
+            background-color: #2196F3 !important;
+            color: white !important;
         }
 
         #interactive-video {
@@ -683,8 +1158,161 @@
         #reset-flash {
             transition: opacity 0.2s ease-in-out !important;
         }
+
+        /* Better caption wrapping */
+        .caption {
+            word-wrap: break-word;
+            hyphens: auto;
+            line-height: 1.4;
+        }
+
+        /* Ensure video captions wrap properly */
+        #video-caption {
+            word-wrap: break-word;
+            hyphens: auto;
+            line-height: 1.4;
+            max-width: 100%;
+        }
+
+        /* Responsive side-by-side layout */
+        @media (max-width: 768px) {
+            .container.blog.large.gray-linear[style*="flex-direction: row"] {
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            .container.blog.large.gray-linear[style*="flex-direction: row"]>div {
+                max-width: 100% !important;
+                flex: none !important;
+            }
+
+            /* Stack captions properly on mobile */
+            .container.blog.large.gray-linear[style*="flex-direction: row"] .caption {
+                text-align: center !important;
+                margin-bottom: 20px;
+            }
+        }
     </style>
     <script>
+        // Environment configuration
+        const environments = {
+            'forced-coord': {
+                name: 'Forced Coordination',
+                heatmapImage: 'assets/figures/rpg-forced-coord-heatmap.png',
+                videoPath: 'assets/figures/forced-coordination-videos/',
+                defaultSelection: { row: 1, col: 4 }
+            },
+            'cramped-room': {
+                name: 'Cramped Room',
+                heatmapImage: 'assets/figures/cramped-room-heatmap.png',
+                videoPath: 'assets/figures/cramped-room-videos/',
+                defaultSelection: { row: 0, col: 0 }
+            },
+            'asymmetric-advantage': {
+                name: 'Asymmetric Advantage',
+                heatmapImage: 'assets/figures/asymm-advantages-heatmap.png',
+                videoPath: 'assets/figures/asymm-videos/',
+                defaultSelection: { row: 4, col: 4 }
+            },
+            'coordination-ring': {
+                name: 'Coordination Ring',
+                heatmapImage: 'assets/figures/coord-ring-heatmap.png',
+                videoPath: 'assets/figures/ring-videos/',
+                defaultSelection: { row: 4, col: 4 }
+            },
+            'counter-circuit': {
+                name: 'Counter Circuit',
+                heatmapImage: 'assets/figures/counter-circuit-heatmap.png',
+                videoPath: 'assets/figures/circuit-videos/',
+                defaultSelection: { row: 4, col: 4 }
+            }
+        };
+
+        let currentEnvironment = 'forced-coord';
+
+        // Function to switch environment
+        window.switchEnvironment = function (envId) {
+            if (!environments[envId]) return;
+
+            currentEnvironment = envId;
+            const env = environments[envId];
+
+            // Update environment button states
+            document.querySelectorAll('.env-button').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.backgroundColor = '#dfdfdf';
+                btn.style.color = '#333';
+            });
+
+            const activeBtn = document.querySelector(`.env-button[data-env="${envId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.style.backgroundColor = '#2196F3';
+                activeBtn.style.color = 'white';
+            }
+
+            // Update heatmap image
+            const heatmapImage = document.getElementById('heatmap-image');
+            heatmapImage.src = env.heatmapImage;
+
+            // Hide all grid cells and show only current environment's cells
+            document.querySelectorAll('.grid-cell').forEach(cell => {
+                cell.classList.remove('selected');
+                const cellEnv = cell.getAttribute('data-env');
+                if (cellEnv === envId) {
+                    cell.style.display = '';
+                } else {
+                    cell.style.display = 'none';
+                }
+            });
+
+            // Update grid selection buttons
+            document.querySelectorAll('.grid-button').forEach(btn => {
+                const btnEnv = btn.getAttribute('data-env');
+                if (btnEnv === envId) {
+                    btn.style.display = '';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+
+            // Update button onclick handlers and text based on environment
+            const gridButtons = document.querySelectorAll(`.grid-button[data-env="${envId}"]`);
+            if (env.buttons && gridButtons.length === env.buttons.length) {
+                gridButtons.forEach((btn, index) => {
+                    const buttonConfig = env.buttons[index];
+                    btn.textContent = buttonConfig.text;
+                    btn.onclick = () => selectGridCell(buttonConfig.row, buttonConfig.col);
+                });
+            }
+
+            // Select default cell for the environment
+            const defaultCell = document.querySelector(`.grid-cell[data-env="${envId}"][data-row="${env.defaultSelection.row}"][data-col="${env.defaultSelection.col}"]`);
+            if (defaultCell) {
+                defaultCell.classList.add('selected');
+
+                // Load default video
+                const videoFile = defaultCell.getAttribute('data-video');
+                const videoPath = `${env.videoPath}${videoFile}`;
+                const video = document.getElementById('interactive-video');
+
+                video.style.opacity = '0.3';
+                video.src = videoPath;
+                video.load();
+                video.playbackRate = 0.5;
+
+                setTimeout(() => {
+                    video.style.opacity = '1';
+                }, 300);
+
+                // Update caption
+                const caption = document.getElementById('video-caption');
+                if (caption) {
+                    caption.innerHTML = getCaptionText(env.defaultSelection.row, env.defaultSelection.col);
+                }
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', function () {
             const gridCells = document.querySelectorAll('.grid-cell');
             const video = document.getElementById('interactive-video');
@@ -735,14 +1363,15 @@
 
             // Initialize default selected cell and video
             function initializeDefaultSelection() {
-                const defaultCell = document.querySelector('.grid-cell.selected');
+                const env = environments[currentEnvironment];
+                const defaultCell = document.querySelector(`.grid-cell[data-env="${currentEnvironment}"].selected`);
                 if (defaultCell) {
                     const videoFile = defaultCell.getAttribute('data-video');
                     const row = defaultCell.getAttribute('data-row');
                     const col = defaultCell.getAttribute('data-col');
 
-                    // Set default video
-                    const videoPath = `assets/figures/forced-coordination-videos/${videoFile}`;
+                    // Set default video using current environment's path
+                    const videoPath = `${env.videoPath}${videoFile}`;
                     video.src = videoPath;
                     video.playbackRate = 0.5; // Slow down by half
 
@@ -795,8 +1424,22 @@
                 setTimeout(updatePlayPauseIcon, 100);
             });
 
+            // Function to programmatically select a grid cell
+            window.selectGridCell = function (row, col) {
+                // Find the grid cell with matching row, col and current environment
+                const targetCell = document.querySelector(`.grid-cell[data-env="${currentEnvironment}"][data-row="${row}"][data-col="${col}"]`);
+                if (targetCell) {
+                    // Simulate a click on the target cell
+                    targetCell.click();
+                }
+            };
+
             gridCells.forEach(cell => {
                 cell.addEventListener('click', function () {
+                    // Only handle clicks for cells of the current environment
+                    const cellEnv = this.getAttribute('data-env');
+                    if (cellEnv !== currentEnvironment) return;
+
                     // Remove selected class from all cells
                     gridCells.forEach(c => c.classList.remove('selected'));
 
@@ -808,8 +1451,9 @@
                     const row = this.getAttribute('data-row');
                     const col = this.getAttribute('data-col');
 
-                    // Update video source - adjust the path to match your video location
-                    const videoPath = `assets/figures/forced-coordination-videos/${videoFile}`;
+                    // Update video source using current environment's path
+                    const env = environments[currentEnvironment];
+                    const videoPath = `${env.videoPath}${videoFile}`;
 
                     // Smoother video transition to prevent flicker
                     video.style.opacity = '0.3';
