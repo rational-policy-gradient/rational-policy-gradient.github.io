@@ -1192,6 +1192,63 @@
                 margin-bottom: 20px;
             }
         }
+
+        /* Mobile-specific styles for interactive visualization */
+        @media (max-width: 768px) {
+
+            /* Make environment selector buttons smaller on mobile */
+            .env-button {
+                padding: 6px 10px !important;
+                font-size: 12px !important;
+                white-space: nowrap;
+            }
+
+            /* Stack heatmap and video vertically instead of side by side */
+            #interactive-visualization>div:last-child {
+                flex-direction: column !important;
+                gap: 20px !important;
+            }
+
+            /* Make both columns full width on mobile */
+            #interactive-visualization>div:last-child>div {
+                flex: none !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            /* Make grid selection buttons smaller on mobile */
+            .grid-button {
+                padding: 4px 8px !important;
+                font-size: 10px !important;
+                white-space: nowrap;
+            }
+
+            /* Adjust spacing for mobile */
+            #interactive-visualization {
+                gap: 10px !important;
+                min-height: auto !important;
+                padding: 10px !important;
+            }
+
+            /* Make environment selector wrap better on mobile */
+            #interactive-visualization>div:first-child {
+                margin-bottom: 15px !important;
+                gap: 6px !important;
+            }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 480px) {
+            .env-button {
+                padding: 4px 8px !important;
+                font-size: 11px !important;
+            }
+
+            .grid-button {
+                padding: 3px 6px !important;
+                font-size: 9px !important;
+            }
+        }
     </style>
     <script>
         // Environment configuration
